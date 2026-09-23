@@ -15,6 +15,7 @@ services:
 
       - ./etc/caddy/Caddyfile:/etc/caddy/Caddyfile
 
+      - ./etc/caddy/downloads.Caddyfile:/etc/caddy/downloads.Caddyfile
       - ./etc/caddy/sure.Caddyfile:/etc/caddy/sure.Caddyfile
 
     command: [ "caddy", "run", "--watch", "--config", "/etc/caddy/Caddyfile" ]
