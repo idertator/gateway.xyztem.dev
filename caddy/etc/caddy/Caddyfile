@@ -1,0 +1,35 @@
+{
+	metrics
+
+	# Use ZeroSSL’s ACME directory globally
+	acme_ca https://acme.zerossl.com/v2/DV90
+	email idertator@gmail.com
+
+	# Trust Cloudflare as upstream proxy so logs and X-Forwarded-For reflect real client.
+	# IP ranges from https://www.cloudflare.com/ips/ (refresh when CF updates them).
+	servers {
+		trusted_proxies static 173.245.48.0/20 103.21.244.0/22 103.22.200.0/22 103.31.4.0/22 141.101.64.0/18 108.162.192.0/18 190.93.240.0/20 188.114.96.0/20 197.234.240.0/22 198.41.128.0/17 162.158.0.0/15 104.16.0.0/13 104.24.0.0/14 172.64.0.0/13 131.0.72.0/22 2400:cb00::/32 2606:4700::/32 2803:f800::/32 2405:b500::/32 2405:8100::/32 2a06:98c0::/29 2c0f:f248::/32
+		client_ip_headers CF-Connecting-IP X-Forwarded-For
+	}
+}
+
+# Cache policy snippet — applied via `import cache_policy` in each site block.
+# Build outputs (content-hashed by Vite/Next/Nuxt/CRA) get year-long immutable cache.
+# Everything else (HTML, SPA routes, /boot, /healthz) is never cached at edge or browser
+# so deploys take effect immediately. `defer` makes these headers win over upstream.
+(cache_policy) {
+	@build_assets path /assets/* /_next/static/* /_nuxt/* /static/js/* /static/css/* /static/media/*
+	header @build_assets {
+		Cache-Control "public, max-age=31536000, immutable"
+		defer
+	}
+
+	@uncached not path /assets/* /_next/static/* /_nuxt/* /static/js/* /static/css/* /static/media/*
+	header @uncached {
+		Cache-Control "no-store, must-revalidate"
+		CDN-Cache-Control "no-store"
+		defer
+	}
+}
+
+import "*.Caddyfile"

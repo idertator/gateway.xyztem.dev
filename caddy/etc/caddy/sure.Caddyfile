@@ -1,0 +1,3 @@
+sure.idertator.com {
+    reverse_proxy 100.105.195.103:3000
+}

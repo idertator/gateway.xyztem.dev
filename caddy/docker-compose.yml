@@ -1,0 +1,30 @@
+services:
+  caddy:
+    image: caddy
+    container_name: caddy
+    hostname: caddy
+    restart: always
+    ports:
+      - 0.0.0.0:80:80
+      - 0.0.0.0:443:443
+      - 0.0.0.0:443:443/udp
+      - 0.0.0.0:2019:2019
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+
+      - ./etc/caddy/Caddyfile:/etc/caddy/Caddyfile
+
+      - ./etc/caddy/sure.Caddyfile:/etc/caddy/sure.Caddyfile
+
+    command: [ "caddy", "run", "--watch", "--config", "/etc/caddy/Caddyfile" ]
+    networks:
+      - xyztem
+
+networks:
+  xyztem:
+    external: true
+
+volumes:
+  caddy_data:
+  caddy_config:
