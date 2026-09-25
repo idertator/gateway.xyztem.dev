@@ -1,0 +1,71 @@
+# MinIO
+
+(custom_header) {
+	header_up X-Forwarded-Host {host}
+	header_up Host {http.reverse_proxy.upstream.hostport}
+}
+
+(privacy_header) {
+	header {
+		# disable FLoC tracking
+		Permissions-Policy interest-cohort=()
+		# enable HSTS
+		Strict-Transport-Security max-age=31536000;
+		# disable clients from sniffing the media type
+		X-Content-Type-Options nosniff
+		# clickjacking protection
+		X-Frame-Options DENY
+		# keep referrer data off of HTTP connections
+		Referrer-Policy no-referrer-when-downgrade
+	}
+}
+
+(custom-headers) {
+	header_up X-Forwarded-Ssl on
+	header_up Host {host}
+	header_up X-Real-IP {remote}
+	header_up X-Url-Scheme {scheme}
+}
+
+minio.xyztem.dev {
+	header X-Robots-Tag "noindex, nofollow"
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+    handle /public* {
+        header Cache-Control "public, max-age=3600"
+        reverse_proxy 100.78.40.83:60284
+    }
+
+    handle {
+        header Cache-Control "no-store"
+        reverse_proxy 100.78.40.83:60284
+    }
+
+	log 
+}
+
+
+files.xyztem.dev {
+	header X-Robots-Tag "noindex, nofollow"
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	reverse_proxy /* 100.78.40.83:16285
+
+	encode gzip zstd
+
+	log 
+}
+
+meili.xyztem.dev {
+	header X-Robots-Tag "noindex, nofollow"
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	reverse_proxy /* 100.78.40.83:56734
+
+	encode gzip zstd
+
+	log 
+}

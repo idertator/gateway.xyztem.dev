@@ -18,6 +18,7 @@ services:
 
       - ./etc/caddy/idertator.Caddyfile:/etc/caddy/idertator.Caddyfile
       - ./etc/caddy/topgroupx.Caddyfile:/etc/caddy/topgroupx.Caddyfile
+      - ./etc/caddy/xyztem.Caddyfile:/etc/caddy/xyztem.Caddyfile
 
     command: [ "caddy", "run", "--watch", "--config", "/etc/caddy/Caddyfile" ]
     networks:
