@@ -1,3 +1,5 @@
+# <- Backends ->
+
 backend.t3s.es {
 	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
 
@@ -7,11 +9,264 @@ backend.t3s.es {
 
 	encode gzip zstd
 
-	log {
-		output file /var/log/caddy/backend.t3s.es.log {
-			roll_size 1gb
-			roll_keep 5
-			roll_keep_for 720h
+	log
+}
+
+
+# <- Clients ->
+
+admin.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	header APP_ID: 1
+
+	reverse_proxy /* 100.112.35.16:8080
+
+	import cache_policy
+
+	encode gzip zstd
+
+	log
+}
+
+
+agencies.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+	respond /boot "01,devel" 200
+
+	@favicon path /favicon.ico /icon.png
+	handle @favicon {
+		root * /usr/share/caddy/b2b/tge
+		file_server
+	}
+
+	@topbar path /topbar.png
+	handle @topbar {
+		root * /usr/share/caddy/b2b/tge
+		file_server
+	}
+
+	reverse_proxy /* 100.112.35.16:8081
+
+	import cache_policy
+
+	encode gzip zstd
+
+	log
+}
+
+b2c.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	handle_path /sitemap.xml {
+		rewrite * /api/internal/intranets/b2c/cms/sitemap.xml
+		reverse_proxy t3-backend-devel-server:8000 {
+			header_up X-T3-APPID "33"
+			header_up X-T3-SITEID "b2c"
+
+			header_up Host {http.request.host}
 		}
 	}
+
+	handle_path /robots.txt {
+		rewrite * /api/internal/intranets/b2c/cms/robots.txt
+		reverse_proxy t3-backend-devel-server:8000 {
+			header_up X-T3-APPID "33"
+			header_up X-T3-SITEID "b2c"
+
+			header_up Host {http.request.host}
+		}
+	}
+
+	handle_path /llms.txt {
+		rewrite * /api/internal/intranets/b2c/cms/llms.txt
+		reverse_proxy t3-backend-devel-server:8000 {
+			header_up X-T3-APPID "33"
+			header_up X-T3-SITEID "b2c"
+
+			header_up Host {http.request.host}
+		}
+	}
+
+	reverse_proxy /* 100.112.35.16:8082
+
+	import cache_policy
+
+	encode gzip zstd
+	log
 }
+
+
+partners.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	reverse_proxy /* 100.112.35.16:8083
+
+	import cache_policy
+
+	encode gzip zstd
+
+	log
+}
+
+hoteliers.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	reverse_proxy /* 100.112.35.16:8084
+
+	import cache_policy
+
+	encode gzip zstd
+
+	log
+}
+
+
+helpdesk.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	reverse_proxy /* 100.112.35.16:8085
+
+	import cache_policy
+
+	encode gzip zstd
+
+	log
+}
+
+
+payments.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+	respond /boot "01,devel" 200
+
+	reverse_proxy /* 100.112.35.16:8100
+
+	import cache_policy
+
+	encode gzip zstd
+
+	log
+}
+
+pay.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+	respond /boot "33,devel" 200
+
+	reverse_proxy /* 100.112.35.16:8100
+
+	import cache_policy
+
+	encode gzip zstd
+
+	log
+}
+
+unsubscribe.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	@favicon path /favicon.ico
+	handle @favicon {
+		root * /usr/share/caddy/b2b/tge
+		file_server
+	}
+
+	reverse_proxy /* 100.112.35.16:8101
+
+	import cache_policy
+
+	encode gzip zstd
+
+	log
+}
+
+
+v.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	reverse_proxy /* 100.112.35.16:8102
+
+	import cache_policy
+
+	encode gzip zstd
+
+	log
+}
+
+
+contacts.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	reverse_proxy /* 100.112.35.16:8103
+
+	import cache_policy
+
+	encode gzip zstd
+
+	log
+}
+
+t3s.es, www.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	@www host www.t3s.es
+	redir @www https://t3s.es{uri} permanent
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	handle_path /sitemap.xml {
+		rewrite * /api/internal/website/public/sitemap.xml
+		reverse_proxy 100.112.35.16:8000 {
+			header_up X-T3-SITEID "web"
+
+			header_up Host {http.request.host}
+		}
+	}
+
+	handle_path /robots.txt {
+		rewrite * /api/internal/website/public/robots.txt
+		reverse_proxy 100.112.35.16:8000 {
+			header_up X-T3-SITEID "web"
+
+			header_up Host {http.request.host}
+		}
+	}
+
+	handle_path /llms.txt {
+		rewrite * /api/internal/website/public/llms.txt
+		reverse_proxy 100.112.35.16:8000 {
+			header_up X-T3-SITEID "web"
+
+			header_up Host {http.request.host}
+		}
+	}
+
+	handle {
+	    reverse_proxy 100.112.35.16:8104
+	}
+
+	encode gzip zstd
+	log
+}
+
