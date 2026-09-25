@@ -14,7 +14,7 @@ services:
       - caddy_config:/config
 
       - ./etc/caddy/Caddyfile:/etc/caddy/Caddyfile
-      - ./caddy/certs:/etc/caddy/certs
+      - ./certs:/etc/caddy/certs
 
       - ./etc/caddy/idertator.Caddyfile:/etc/caddy/idertator.Caddyfile
       - ./etc/caddy/topgroupx.Caddyfile:/etc/caddy/topgroupx.Caddyfile
