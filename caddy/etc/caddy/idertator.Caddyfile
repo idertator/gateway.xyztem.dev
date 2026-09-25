@@ -1,3 +1,7 @@
 downloads.idertator.com {
     reverse_proxy 100.105.195.103:8080
 }
+
+sure.idertator.com {
+    reverse_proxy 100.105.195.103:3000
+}

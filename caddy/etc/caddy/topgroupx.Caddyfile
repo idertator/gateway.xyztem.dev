@@ -1,0 +1,17 @@
+backend.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	reverse_proxy /* 100.112.35.16:8000
+
+	encode gzip zstd
+
+	log {
+		output file /var/log/caddy/backend.t3s.es.log {
+			roll_size 1gb
+			roll_keep 5
+			roll_keep_for 720h
+		}
+	}
+}
