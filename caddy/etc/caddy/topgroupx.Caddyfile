@@ -22,7 +22,7 @@ admin.t3s.es {
 
 	header APP_ID: 1
 
-	reverse_proxy /* 100.112.35.16:8080
+reverse_proxy /* 100.112.35.16:8080
 
 	import cache_policy
 

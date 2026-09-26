@@ -1,0 +1,11 @@
+dev.alextheplumber.net {
+	tls /etc/caddy/certs/alextheplumber.net.pem /etc/caddy/certs/alextheplumber.net.key
+
+	reverse_proxy 100.112.35.16:8500
+}
+
+devm.alextheplumber.net {
+	tls /etc/caddy/certs/alextheplumber.net.pem /etc/caddy/certs/alextheplumber.net.key
+
+	reverse_proxy 100.112.35.16:8500
+}
