@@ -16,6 +16,7 @@ services:
       - ./etc/caddy/Caddyfile:/etc/caddy/Caddyfile
       - ./certs:/etc/caddy/certs
 
+      - ./etc/caddy/alextheplumber.Caddyfile:/etc/caddy/alextheplumber.Caddyfile
       - ./etc/caddy/idertator.Caddyfile:/etc/caddy/idertator.Caddyfile
       - ./etc/caddy/topgroupx.Caddyfile:/etc/caddy/topgroupx.Caddyfile
       - ./etc/caddy/xyztem.Caddyfile:/etc/caddy/xyztem.Caddyfile
