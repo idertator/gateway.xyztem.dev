@@ -1,11 +1,42 @@
 dev.alextheplumber.net {
 	tls /etc/caddy/certs/alextheplumber.net.pem /etc/caddy/certs/alextheplumber.net.key
 
-	reverse_proxy 100.112.35.16:8500
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	reverse_proxy 100.112.35.16:8500 {
+		header_up Host {host}
+	}
+
+	encode gzip zstd
+
+	log
 }
 
+# The technician field app (PWA). Same origin process as dev.alextheplumber.net:
+# the portal folds every request whose Host is MOBILE_URL into the /mobile/
+# prefix, so the Host header must reach the upstream unchanged — rewriting it
+# would serve the public landing page on this name instead of the app.
+# No `import cache_policy` here: the app sets its own Cache-Control per route
+# (no-cache on the worker, max-age on the manifest) and cache_policy's `defer`
+# headers would overwrite them.
 devm.alextheplumber.net {
 	tls /etc/caddy/certs/alextheplumber.net.pem /etc/caddy/certs/alextheplumber.net.key
 
-	reverse_proxy 100.112.35.16:8500
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	# An installed client that pins a stale service worker never updates again,
+	# so the worker is kept out of the edge cache as well as the browser's.
+	@service_worker path /mobile/service-worker.js
+	header @service_worker {
+		CDN-Cache-Control "no-store"
+		defer
+	}
+
+	reverse_proxy 100.112.35.16:8500 {
+		header_up Host {host}
+	}
+
+	encode gzip zstd
+
+	log
 }
