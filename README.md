@@ -26,6 +26,7 @@ This give access to the following home sites through a Tailscale private network
 - 8102 -> v.t3s.es
 - 8103 -> contacts.t3s.es
 - 8104 -> [www.]t3s.es
+- 8105 -> docs.t3s.es
 
 - 8500 -> dev.alextheplumber.net, devm.alextheplumber.net
 
