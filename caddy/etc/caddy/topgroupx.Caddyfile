@@ -16,8 +16,6 @@ backend.t3s.es {
 gateway.t3s.es {
 	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
 
-	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
-
 	reverse_proxy /* 100.112.35.16:8001
 
 	encode gzip zstd
