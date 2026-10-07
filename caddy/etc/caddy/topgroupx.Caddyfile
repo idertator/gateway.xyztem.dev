@@ -16,7 +16,7 @@ backend.t3s.es {
 gateway.t3s.es {
 	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
 
-	reverse_proxy /* 100.112.35.16:8002
+	reverse_proxy /* 100.112.35.16:8003
 
 	encode gzip zstd
 
