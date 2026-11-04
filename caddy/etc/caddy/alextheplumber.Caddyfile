@@ -3,7 +3,7 @@ dev.alextheplumber.net {
 
 	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
 
-	reverse_proxy 100.112.35.16:8500 {
+	reverse_proxy 100.78.132.23:8500 {
 		header_up Host {host}
 	}
 
@@ -32,7 +32,7 @@ devm.alextheplumber.net {
 		defer
 	}
 
-	reverse_proxy 100.112.35.16:8500 {
+	reverse_proxy 100.78.132.23:8500 {
 		header_up Host {host}
 	}
 

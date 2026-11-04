@@ -5,7 +5,7 @@ backend.t3s.es {
 
 	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
 
-	reverse_proxy /* 100.112.35.16:8000
+	reverse_proxy /* 100.78.132.23:8000
 
 	encode gzip zstd
 
@@ -16,7 +16,7 @@ backend.t3s.es {
 gateway.t3s.es {
 	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
 
-	reverse_proxy /* 100.112.35.16:8003
+	reverse_proxy /* 100.78.132.23:8003
 
 	encode gzip zstd
 
@@ -28,7 +28,7 @@ gateway.t3s.es {
 imgs.t3s.es {
 	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
 
-	reverse_proxy 100.112.35.16:8300
+	reverse_proxy 100.78.132.23:8300
 
 	encode gzip zstd
 
@@ -45,7 +45,7 @@ admin.t3s.es {
 
 	header APP_ID: 1
 
-reverse_proxy /* 100.112.35.16:8080
+reverse_proxy /* 100.78.132.23:8080
 
 	import cache_policy
 
@@ -73,7 +73,7 @@ agencies.t3s.es {
 		file_server
 	}
 
-	reverse_proxy /* 100.112.35.16:8081
+	reverse_proxy /* 100.78.132.23:8081
 
 	import cache_policy
 
@@ -117,7 +117,7 @@ b2c.t3s.es {
 		}
 	}
 
-	reverse_proxy /* 100.112.35.16:8082
+	reverse_proxy /* 100.78.132.23:8082
 
 	import cache_policy
 
@@ -131,7 +131,7 @@ partners.t3s.es {
 
 	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
 
-	reverse_proxy /* 100.112.35.16:8083
+	reverse_proxy /* 100.78.132.23:8083
 
 	import cache_policy
 
@@ -145,7 +145,7 @@ hoteliers.t3s.es {
 
 	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
 
-	reverse_proxy /* 100.112.35.16:8084
+	reverse_proxy /* 100.78.132.23:8084
 
 	import cache_policy
 
@@ -160,7 +160,7 @@ helpdesk.t3s.es {
 
 	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
 
-	reverse_proxy /* 100.112.35.16:8085
+	reverse_proxy /* 100.78.132.23:8085
 
 	import cache_policy
 
@@ -176,7 +176,7 @@ payments.t3s.es {
 	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
 	respond /boot "01,devel" 200
 
-	reverse_proxy /* 100.112.35.16:8100
+	reverse_proxy /* 100.78.132.23:8100
 
 	import cache_policy
 
@@ -191,7 +191,7 @@ pay.t3s.es {
 	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
 	respond /boot "33,devel" 200
 
-	reverse_proxy /* 100.112.35.16:8100
+	reverse_proxy /* 100.78.132.23:8100
 
 	import cache_policy
 
@@ -211,7 +211,7 @@ unsubscribe.t3s.es {
 		file_server
 	}
 
-	reverse_proxy /* 100.112.35.16:8101
+	reverse_proxy /* 100.78.132.23:8101
 
 	import cache_policy
 
@@ -226,7 +226,7 @@ v.t3s.es {
 
 	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
 
-	reverse_proxy /* 100.112.35.16:8102
+	reverse_proxy /* 100.78.132.23:8102
 
 	import cache_policy
 
@@ -241,7 +241,7 @@ contacts.t3s.es {
 
 	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
 
-	reverse_proxy /* 100.112.35.16:8103
+	reverse_proxy /* 100.78.132.23:8103
 
 	import cache_policy
 
@@ -256,7 +256,7 @@ docs.t3s.es {
 
 	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
 
-	reverse_proxy /* 100.112.35.16:8105
+	reverse_proxy /* 100.78.132.23:8105
 
 	import cache_policy
 
@@ -275,7 +275,7 @@ t3s.es, www.t3s.es {
 
 	handle_path /sitemap.xml {
 		rewrite * /api/internal/website/public/sitemap.xml
-		reverse_proxy 100.112.35.16:8000 {
+		reverse_proxy 100.78.132.23:8000 {
 			header_up X-T3-SITEID "web"
 
 			header_up Host {http.request.host}
@@ -284,7 +284,7 @@ t3s.es, www.t3s.es {
 
 	handle_path /robots.txt {
 		rewrite * /api/internal/website/public/robots.txt
-		reverse_proxy 100.112.35.16:8000 {
+		reverse_proxy 100.78.132.23:8000 {
 			header_up X-T3-SITEID "web"
 
 			header_up Host {http.request.host}
@@ -293,7 +293,7 @@ t3s.es, www.t3s.es {
 
 	handle_path /llms.txt {
 		rewrite * /api/internal/website/public/llms.txt
-		reverse_proxy 100.112.35.16:8000 {
+		reverse_proxy 100.78.132.23:8000 {
 			header_up X-T3-SITEID "web"
 
 			header_up Host {http.request.host}
@@ -301,7 +301,7 @@ t3s.es, www.t3s.es {
 	}
 
 	handle {
-	    reverse_proxy 100.112.35.16:8104
+	    reverse_proxy 100.78.132.23:8104
 	}
 
 	encode gzip zstd
