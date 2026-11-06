@@ -1,7 +1,7 @@
 luisapacheco.xyztem.dev {
 	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
 
-	redir / /admin/ 302
+	# redir / /admin/ 302
 
 	reverse_proxy 100.78.132.23:8600 {
 		header_up Host {host}
