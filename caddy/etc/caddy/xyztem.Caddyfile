@@ -34,12 +34,12 @@ minio.xyztem.dev {
 
     handle /public* {
         header Cache-Control "public, max-age=3600"
-        reverse_proxy 100.78.40.83:60284
+        reverse_proxy idertator-server-03.tailb20ae.ts.net:60284
     }
 
     handle {
         header Cache-Control "no-store"
-        reverse_proxy 100.78.40.83:60284
+        reverse_proxy idertator-server-03.tailb20ae.ts.net:60284
     }
 
 	log 
@@ -51,19 +51,7 @@ files.xyztem.dev {
 
 	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
 
-	reverse_proxy /* 100.78.40.83:16285
-
-	encode gzip zstd
-
-	log 
-}
-
-meili.xyztem.dev {
-	header X-Robots-Tag "noindex, nofollow"
-
-	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
-
-	reverse_proxy /* 100.78.40.83:56734
+	reverse_proxy /* idertator-server-03.tailb20ae.ts.net:16285
 
 	encode gzip zstd
 
