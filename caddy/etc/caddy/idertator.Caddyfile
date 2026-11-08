@@ -5,3 +5,7 @@ downloads.idertator.com {
 sure.idertator.com {
     reverse_proxy 100.105.195.103:3000
 }
+
+jackett.idertator.com {
+    reverse_proxy 100.105.195.103:9117
+}
