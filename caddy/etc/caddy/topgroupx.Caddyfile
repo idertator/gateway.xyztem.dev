@@ -45,7 +45,7 @@ admin.t3s.es {
 
 	header APP_ID: 1
 
-reverse_proxy /* 100.78.132.23:8080
+    reverse_proxy /* 100.78.132.23:8080
 
 	import cache_policy
 
@@ -257,6 +257,20 @@ docs.t3s.es {
 	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
 
 	reverse_proxy /* 100.78.132.23:8105
+
+	import cache_policy
+
+	encode gzip zstd
+
+	log
+}
+
+auth.t3s.es {
+	tls /etc/caddy/certs/t3s.es.pem /etc/caddy/certs/t3s.es.key
+
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	reverse_proxy /* 100.78.132.23:8106
 
 	import cache_policy
 
