@@ -27,6 +27,18 @@
 	header_up X-Url-Scheme {scheme}
 }
 
+xyztem.dev {
+	respond /healthz "Status: 200. Working OVER: {http.request.proto}..." 200
+
+	reverse_proxy 100.78.132.23:8700 {
+		header_up Host {host}
+	}
+
+	encode gzip zstd
+
+	log
+}
+
 minio.xyztem.dev {
 	header X-Robots-Tag "noindex, nofollow"
 
@@ -57,3 +69,4 @@ files.xyztem.dev {
 
 	log 
 }
+
