@@ -29,6 +29,8 @@ This give access to the following home sites through a Tailscale private network
 - 8105 -> docs.t3s.es
 
 - 8500 -> dev.alextheplumber.net, devm.alextheplumber.net
+- 8600 -> luisapacheco.xyztem.dev
+- 8700 -> xyztem.dev
 
 ### home3.xyztem.dev (Services)
 
